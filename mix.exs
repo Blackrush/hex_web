@@ -6,17 +6,25 @@ defmodule HexWeb.Mixfile do
      version: "0.0.1",
      elixir: "~> 1.0",
      aliases: aliases,
-     deps: deps]
+     deps: deps(Mix.env)]
   end
 
   def application do
-    [applications: [:plug, :cowboy, :ecto, :postgrex, :poison, :bcrypt, :mini_s3,
-                    :logger, :porcelain],
+    [applications: applications(Mix.env),
      mod: {HexWeb, []},
      env: []]
   end
 
-  defp deps do
+  defp applications(env) when env in [:prod, :test] do
+    [:plug, :cowboy, :ecto, :postgrex, :poison, :bcrypt, :mini_s3,
+     :logger, :porcelain]
+  end
+
+  defp applications(:dev) do
+    applications(:prod) ++ [:reprise]
+  end
+
+  defp deps(env) when env in [:prod, :test] do
     [{:plug,      "~> 0.8"},
      {:cowboy,    "~> 1.0"},
      {:ecto,      "~> 0.2.5"},
@@ -28,6 +36,10 @@ defmodule HexWeb.Mixfile do
      {:bcrypt,    github: "opscode/erlang-bcrypt"},
      {:mini_s3,   github: "ericmj/mini_s3", branch: "hex-fixes"}
    ]
+  end
+
+  defp deps(:dev) do
+    deps(:prod) ++ [{:reprise, "~> 0.3.0"}]
   end
 
   defp aliases do

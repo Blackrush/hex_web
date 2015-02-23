@@ -13,4 +13,5 @@
   "poolboy": {:hex, :poolboy, "1.2.1"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
   "postgrex": {:hex, :postgrex, "0.6.0"},
-  "ranch": {:hex, :ranch, "1.0.0"}}
+  "ranch": {:hex, :ranch, "1.0.0"},
+  "reprise": {:hex, :reprise, "0.3.0"}}
